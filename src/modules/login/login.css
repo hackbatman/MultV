@@ -1,0 +1,18 @@
+.imagenBackg {
+    background-image: url("https://i.pinimg.com/originals/4a/6a/ac/4a6aac154b7557ba7c78e6e1f352bcfd.jpg");
+}
+
+.backg-dark {
+    background-color: rgba(0, 0, 0, 0.363);
+    backdrop-filter: blur(50px);
+}
+
+.card span {
+    justify-content: center;
+    align-items: center;
+    display: block;
+}
+
+.bg-second {
+    background-color: rgb(10, 55, 63);
+}

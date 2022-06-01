@@ -1,0 +1,21 @@
+.modalito {
+    background-color: rgba(0, 0, 0, 0.75);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalito.is-open {
+    display: flex;
+}
+
+.modal-container {
+    position: relative;
+    background-color: rgb(215, 219, 223);
+    padding: 1rem;
+    min-width: 30%;
+    max-width: 50%;
+    min-height: 65%;
+    max-height: 85%;
+    border-radius: 30px;
+}

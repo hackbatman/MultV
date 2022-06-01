@@ -1,0 +1,35 @@
+.menup {
+    margin: 0;
+    padding: 0;
+    display: flexbox;
+    width: 100%;
+}
+
+.menu_principal {
+    width: 20%;
+    height: 400px;
+    position: absolute;
+}
+
+.contenendor {
+    display: flex;
+    width: 70%;
+    margin-top: 8rem;
+    position: absolute;
+    margin-left: 25%;
+}
+
+.contenendor_sec {
+    width: 100%;
+}
+
+.card-section {
+    background: #c4f3ed;
+    color: #327752;
+    margin: 0px 10px 0px 0px;
+    height: 100%;
+    width: 100%;
+}
+
+
+/* estilo para ventas */

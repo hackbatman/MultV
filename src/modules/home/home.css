@@ -1,0 +1,14 @@
+.contenendor {
+    display: flex;
+    width: 70%;
+    margin-top: 12rem;
+    position: absolute;
+    margin-left: 25%;
+}
+
+.menup {
+    margin: 0;
+    padding: 0;
+    display: flexbox;
+    width: 100%;
+}
