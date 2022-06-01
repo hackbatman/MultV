@@ -5,6 +5,7 @@ import { faArrowAltCircleRight, faCashRegister, faShoppingBag, faUser, faUserPlu
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Sidebar from "../../components/sidebar/sidebar";
 import useAuth from "../../auth/useAuth";
+import { Link } from "react-router-dom";
 
 export default function Home() {
     const auth = useAuth();
@@ -41,7 +42,7 @@ export default function Home() {
                                         </div>
                                     </div>
 
-                                    <a href="/" className="text-center">Ver Clientes   <i className="fa fa-arrow-circle-right"><FontAwesomeIcon icon={faArrowAltCircleRight} /></i></a>
+                                    <Link to="/cliente" className="text-center">Ver Clientes   <i className="fa fa-arrow-circle-right"><FontAwesomeIcon icon={faArrowAltCircleRight} /></i></Link>
                                 </div>
                             </div>
                             <div className="col-xl-3 col-md-6 mb-4">
@@ -61,7 +62,7 @@ export default function Home() {
 
                                         </div>
                                     </div>
-                                    <a href="/" className="text-center text-success">Ver Productos  <i className="fa fa-arrow-circle-right"><FontAwesomeIcon icon={faArrowAltCircleRight} /></i></a>
+                                    <Link to="/invetario" className="text-center text-success">Ver Productos  <i className="fa fa-arrow-circle-right"><FontAwesomeIcon icon={faArrowAltCircleRight} /></i></Link>
                                 </div>
                             </div>
 
@@ -82,7 +83,7 @@ export default function Home() {
 
                                         </div>
                                     </div>
-                                    <a href="/" className="text-center text-info">Ver Usuarios  <i><FontAwesomeIcon icon={faArrowAltCircleRight} /></i></a>
+                                    <Link to="/cliente" className="text-center text-info">Ver Usuarios  <i><FontAwesomeIcon icon={faArrowAltCircleRight} /></i></Link>
                                 </div>
                             </div>
 
@@ -104,7 +105,7 @@ export default function Home() {
                                         </div>
                                     </div>
 
-                                    <a href="/" className="text-center text-warning">Ver Ventas <i className="fa fa-arrow-circle-right"><FontAwesomeIcon icon={faArrowAltCircleRight} /></i></a>
+                                    <Link to="/ventas" className="text-center text-warning">Ver Ventas <i className="fa fa-arrow-circle-right"><FontAwesomeIcon icon={faArrowAltCircleRight} /></i></Link>
                                 </div>
                             </div>
 
