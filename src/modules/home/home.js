@@ -4,8 +4,10 @@ import './home.css';
 import { faArrowAltCircleRight, faCashRegister, faShoppingBag, faUser, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Sidebar from "../../components/sidebar/sidebar";
+import useAuth from "../../auth/useAuth";
 
 export default function Home() {
+    const auth = useAuth();
 
     return (
         <>
@@ -18,7 +20,7 @@ export default function Home() {
 
                     <div className="container-fluid">
                         <div>
-                            <h1>welcome to User</h1>
+                            <h1>welcome to {auth.user.name}</h1>
                         </div>
                         <div className="row">
                             <div className="col-xl-3 col-md-6 mb-4">
