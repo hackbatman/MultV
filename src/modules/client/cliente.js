@@ -99,7 +99,7 @@ const Cliente = () => {
                         <div className="card shadow mb-4">
                             <div className="card-header">
                                 <div className='section-lateral d-flex'>
-                                    <h2 className="m-2 font-weight-bold p-2 w-100 bd-highlight">Lista de clientes</h2>
+                                    <h2 className="m-2 font-weight-bold p-2 w-100 bd-highlight">Lista de clientes Deudores</h2>
                                     <div className="p-2 flex-shrink-1 bd-highlight">
                                         <p className='text-end'>{dt}</p>
                                     </div>
@@ -110,7 +110,7 @@ const Cliente = () => {
 
                                 <div className='row'>
                                     <div className='col-md-8'>
-                                        <h3>Listado de cliente</h3>
+                                        <h3>Deudores</h3>
                                         <div className='card m-2'>
                                             <table className='table table-hover'>
                                                 <thead>
@@ -151,7 +151,7 @@ const Cliente = () => {
                                     </div>
                                     <div className='col-md-4'>
                                         <div className='card'>
-                                            <p className='badge rounded-pill bg-warning text-dark'>Click on colname for detail client</p>
+                                            {/* <p className='badge rounded-pill bg-warning text-dark'>Click on colname for detail client</p> */}
                                             <div className='card-body'>
                                                 <div>
                                                     <h3>Detalles de credito</h3>
