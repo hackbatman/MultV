@@ -78,7 +78,7 @@ const Sucursal = () => {
                     <h1 className="hs">Bienvenido {auth.user.name} </h1>
                     <h3 className="hs">Elige el sucursal</h3>
                 </div>
-                <div className="row ">
+                <div className="row">
                     <div className="d-flex justify-content-center">
 
                         {sucur.map((item, index) => (
