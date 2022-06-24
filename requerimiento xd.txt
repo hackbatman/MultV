@@ -1,0 +1,12 @@
+cuantas en bodega 
+vendedor sin precio de compra
+
+registrar en bodega, sucursal
+seleccionar opcion de guardar producto
+busqueda por categoria y nombre
+cliente telefono
+
+
+gas precio actual
+
+inventario de cilindros

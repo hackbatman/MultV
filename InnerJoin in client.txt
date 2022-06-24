@@ -1,0 +1,271 @@
+
+SELECT venta.nombre
+FROM venta
+INNER JOIN sucursal
+ON venta.id_sucu=2 =sucursal.id
+
+
+
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import './ventas.css';
+import Sidebar from '../../components/sidebar/sidebar';
+import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Modal from '../../components/modal/modal';
+import { useModal } from '../../components/modal/useModal';
+import axios from 'axios';
+import useAuth from '../../auth/useAuth';
+import VentasAdd from '../../components/VentasAdd';
+
+
+
+export default function Ventas() {
+
+    const auth = useAuth();
+    var date = new Date();
+    var displayTodayState = date.getDate + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    var dt = date.toDateString();
+    const [body, setBody] = useState([])
+    const [isOpenModal1, openModal1, closeModal1] = useModal(false);
+
+    const inputChange = ({ target }) => {
+        const { name, value } = target
+        setBody({
+            ...body,
+            [name]: value
+        })
+
+    }
+    const url = "http://localhost:8800/inventario/producto"
+    const [prod, setProd] = useState([]);
+   // const [datos, setDatos] = useState([]);
+    const [Newprod, setNewProd] = useState([])
+    const fetchId = async () => {
+
+        try {
+
+            const respuesta = await axios.post(url + "/" + auth.user.id_sucursal);
+            setProd(respuesta.data);
+
+
+        } catch (error) {
+            console.log(error)
+        }
+
+
+    }
+
+    
+
+
+   /* const newDta = () => {
+
+        const id = parseInt(body.id);
+        const respues = prod.find(producto => producto.id === id)
+        if (respues==undefined) {
+            window.alert("No existe dato")
+        }
+        else{
+            setNewProd([...Newprod,{... respues,cant:2}])
+            
+        
+        }
+    
+    }*/
+
+    
+
+    useEffect(() => {
+        fetchId();
+    }, [])
+    //para guardar los nuevos datos
+
+
+    // //Funcion que me permite agregar productos al useState que tiene listaCompra
+     const agregarProductoCompra = () => {
+         let producto;
+        const id = parseInt(body.id);
+         if (Newprod.filter((producto) => producto.id === id).length > 0) {
+             const incrementarCantidad = prod.map((producto) => {
+                 if (producto.id === id) {
+                     producto.cantidad++;
+                     return producto;
+                 } else {
+                    return producto;
+             }
+             });
+
+            prod([...incrementarCantidad]);
+         } else {
+         const tempProd = producto.map(e => ({id: e.id, nombre: e.nombre, descripcion: e.descripcion, cantidad: e.cantidad, precio: e.precio}))
+            const agregarNuevo = tempProd.filter((elemento) => elemento.id === id);
+            prod([...Newprod, ...agregarNuevo]);
+        }
+     }
+
+
+
+    return (
+        <>
+            <div>
+                <Sidebar brand="Ventas" />
+            </div>
+            <section className="home-section">
+                <div className="home-content">
+                    <div className="container-fluid">
+                        <div className="card shadow mb-4">
+                            <div className="card-header py-3 d-flex section-lateral">
+                                <h2 className="m-0 font-weight-bold text-primary p-2 w-100 bd-highlight">Generar Venta Nueva</h2>
+                                <div className="p-2 flex-shrink-1 bd-highlight">
+                                    <p>fecha:{dt}</p>
+                                </div>
+                            </div>
+
+                            <div className="card-body">
+                                <form className="form-horizontal">
+                                    <div className="row m-2">
+                                        <div className='text-center'>
+                                            <h5>Datos de cliente</h5>
+                                        </div>
+                                        <div className="col-md-4">
+                                            <label>Cliente:</label>
+                                            <div className="input-group">
+                                                <input type="text" name='cliente' className="form-control" onChange={inputChange} />
+                                                <span className="input-group-btn">
+                                                    <button className="btn btn-primary" type="button"><span><FontAwesomeIcon icon={faSearch} /></span></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-3">
+                                            <label>NIT:</label>
+                                            <div className="input-group">
+                                                <input type="text" name='nit' className="form-control" onChange={inputChange} />
+                                            </div>
+                                        </div>
+                                        <div className="col-md-5">
+                                            <label>Direccion:</label>
+                                            <div className="input-group">
+                                                <input type="text" name='direccion' className="form-control" onChange={inputChange} />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="row m-2">
+                                        <div className='text-center mt-4'>
+                                            <h5>Datos del producto</h5>
+                                        </div>
+                                        <div className="col-md-9">
+                                            <label >Producto:</label>
+                                            <div className="input-group">
+                                                <input type="text" className="form-control" name='id' placeholder="Codigo del Producto o nombre" onChange={inputChange} />
+                                                <span className="input-group-btn">
+                                                    <button className="btn btn-danger" onClick={agregarProductoCompra} type="button" ><span><FontAwesomeIcon icon={faSearch} /></span></button>
+                                                    <button className="btn btn-primary" type="button" onClick={openModal1} ><span><FontAwesomeIcon icon={faPlus} /></span></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <Modal isOpen={isOpenModal1} closeModal={closeModal1}>
+                                            <div>
+                                                <h1>
+                                                    hola modal 2
+                                                </h1>
+                                            </div>
+                                        </Modal>
+                                    </div>
+                                    {/* <div className="table-responsive mt-5">
+                                        <h5 className="text-center">Detalle De Venta</h5>
+                                        <table id="tventa" className="table table-hover table-striped table-hover" >
+                                            <thead className="text-center" onChange={inputChange}>
+                                                <tr>
+                                                    <th>Codigo</th>
+                                                    <th>Nombre</th>
+                                                    <th>descripcion</th>
+                                                    <th>Precio</th>
+                                                    <th>Cantidad</th>
+                                                    <th>tota</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody className="text-center">
+
+                                                {Newprod.map((producto, index) => (
+                                                    <tr key={index}>
+                                                        <td
+                                                        >{producto.id}</td>
+                                                        <td onChange={inputChange} name='prodName'>{producto.nombre}</td>
+                                                        <td>{producto.descripcion}</td>
+                                                        <td>{producto.precio_venta}</td>
+                                                        <td>{producto.cant}</td>
+                                                        <td>{producto.precio_venta *producto.cant}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                    <div className="row m-5">
+
+                                        <div className="form-group col-md-3">
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text" id="basic-addon1">Subtotal Q</span>
+                                                </div>
+                                                <input type="text" className="form-control" placeholder="Subtotal" name="subtotal"
+                                                    aria-describedby="basic-addon1" />
+                                            </div>
+                                        </div>
+
+
+                                        <div className="form-group col-md-3">
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text">Iva %</span>
+                                                </div>
+                                                <input type="text" className="form-control" placeholder="Iva" name="igv" value="0.00"
+                                                    aria-describedby="basic-addon1" />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group col-md-3">
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text" >Descuento</span>
+                                                </div>
+                                                <input type="text" className="form-control" placeholder="Descuento" name="descuento"
+                                                    value="0.00" aria-describedby="basic-addon1" />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group col-md-3">
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text" >Total Q</span>
+
+                                                </div>
+                                                <input type="text" className="form-control" placeholder="Total" name="total"
+                                                    aria-describedby="basic-addon1" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="form-row">
+                                        <div className="col-md-12">
+                                            <a className="btn btn-primary btn-flat">Regresar</a>
+                                            <button type="submit" className="btn btn-success btn-flat"><i className="fas fa-save"></i> Guardar</button>
+                                        </div>
+                                    </div> */}
+
+                                </form>
+                                <VentasAdd/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+
+        </>
+    )
+}

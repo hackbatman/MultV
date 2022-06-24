@@ -1,0 +1,173 @@
+import './App.css';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { useState, useRef, useEffect } from 'react'
+
+function App() {
+
+  //Obtiene los datos del producto y los guarda en las variables
+  const [producto, setProducto] = useState([]);
+  const [total, setTotal] = useState([]);
+
+
+  //obtiene los datos del id del producto
+  const idproducto = useRef();
+
+  //variables para actualizar producto
+  const nombre = useRef();
+  const marca = useRef();
+  const modelo = useRef();
+  const existencia = useRef();
+  const idproveedor = useRef();
+  const idcategoria = useRef();
+
+
+
+
+  const url = "http://localhost:8800/apiautomax/v1/producto";
+  const totales = "http://localhost:8800/apiautomax/v1/producto/total";
+
+  
+
+
+  // funcion Actualizar
+
+  const actualizarProducto = async () => {
+    const productos = {
+      nombre: nombre.current.value,
+      marca: marca.current.value,
+      marca: modelo.current.value,
+      modelo:existencia.current.value,
+      idproveedor: idproveedor.current.value,
+      idcategoria: idcategoria.current.value,
+      
+    }
+    try {
+      const respuesta = await axios.put(url + "/" + idproducto.current.value, productos);
+      idproducto.current.value = "";
+      nombre.current.value = "";
+      marca.current.value = "";
+      modelo.current.value = "";
+      existencia.current.value = " ";
+      idproveedor.current.value = "";
+      idcategoria.current.value = "";
+      alert(respuesta.data.mensaje);
+    } catch (error) {
+      alert("error es: " + error);
+    }
+
+  }
+
+  //función cargar estudiante
+  const cargarproducto = async () => {
+    const respuesta = await axios.get(url);
+    console.log(respuesta.data);
+    setProducto(respuesta.data);
+
+  }
+/*
+  useEffect( ()=>{
+    cargarproducto();
+  });
+  useEffect( ()=>{
+    verTotal();
+  });
+*/
+  
+
+
+  //funcion ver suma de estudiante
+  //función cargar estudiante
+  const verTotal = async () => {
+    const respuesta = await axios.get(totales);
+    console.log(respuesta.data);
+    setTotal(respuesta.data);
+
+  }
+  return (
+
+    <div className='container flex-row'>
+      <div className='m-3'>
+        <form className='form-control'>
+          <button type="button" className='btn btn-warning m-2' onClick={cargarproducto} >Cargar</button>
+          <input type="text" name='idestudiante' required ref={idproducto} placeholder='Id del estudiante' />
+          <button type="button" className='btn btn-warning m-2' onClick={verTotal} >total</button>
+          <div>
+            <table className='table table-striped'>
+              <thead className='table-dark'>
+                <tr>
+                  <th>total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {total.map(total => (
+                  <tr>
+                    <td>{total.total}</td>
+                  </tr>
+                ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+      <div className='container card m-5'>
+        <table className='table table-striped'>
+          <thead className='table-dark'>
+            <tr>
+              <th>id</th>
+              <th>nombre</th>
+              <th>marca</th>
+              <th>Modelo</th>
+              <th>existencia</th>
+              <th>proveedor</th>
+              <th>categoria</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            {producto.map(producto => (
+              <tr>
+                <td>{producto.idproducto}</td>
+                <td>{producto.nombre}</td>
+                <td>{producto.marca}</td>
+                <td>{producto.modelo}</td>
+                <td>{producto.existencia}</td>
+
+
+              </tr>
+            ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div className='container d-flex flex-row mb-5'>
+        <div className='card m-3 border border-warning'>
+          <form className='form-control'>
+            <h1>Formulario Actualizar Producto</h1>
+            <label className='form-label' >ID</label>
+            <input className='form-control' type="text" name='idproducto' required ref={idproducto} />
+            <label className='form-label' >Nombre</label>
+            <input className='form-control' type="text" name='nombre' required ref={nombre} />
+            <label className='form-label'>Marca</label>
+            <input className='form-control' type="text" name='marca' required ref={marca} />
+            <label className='form-label'>Modelo</label>
+            <input className='form-control' type="text" name='modelo' required ref={modelo} />
+            <label className='form-label'>Existencia</label>
+            <input className='form-control' type="text" name='existencia' required ref={existencia} />
+            <label className='form-label'>idProveedor</label>
+            <input className='form-control' type="text" name='idproveedor' required ref={idproveedor} />
+            <label className='form-label'>IdCategoria</label>
+            <input className='form-control' type="text" name='idcategoria' required ref={idcategoria} />
+            
+            <button type='button' className='btn btn-primary m-3' onClick={actualizarProducto}>Actualizar</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
+export default App;
